@@ -10,7 +10,7 @@
 
 	<!-- @Compoment这类型注解的类都是需要被扫描 说白就是：让Spring的ApplicationContext去加载和初始化所有加了注解的类，给实例化 
 		@Repository:数据层的dao @Service:service就是service @Controller:web比如：action和springmvc-controller类 -->
-	<!-- 扫描文件所在dao包 -->
+	<!-- 扫描文件所在dao包 哪些utul 包 不要扫 -->
 	<context:component-scan base-package="com.tz.dao"/>
 	<context:component-scan base-package="com.tz.service"/>
 
@@ -21,6 +21,7 @@
 <!-- 	dataSource.setPassword("xiaoer"); -->
 
 
+	<!--就是给这个类里面，赋值而已。-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<property name="url" value="jdbc:mysql://192.168.199.143:3306/tzspring?useUnicode=true&amp;characterEncoding=utf8"/>
