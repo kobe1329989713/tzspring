@@ -71,6 +71,17 @@ public class ConnectionTest {
             System.out.println(u.getEmail());
         }
     }
+	@Test
+	public void handler2(){
+        User u = new User();
+        u.setUsername("usernamw02");
+        u.setPassword("pass02");
+        u.setAge(24);
+        u.setAddress("Adapter02");
+        u.setEmail("qq.com");
+        boolean flag = userDao.saveUser(u);
+        System.out.println(flag);
+    }
 
 
 

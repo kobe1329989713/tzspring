@@ -22,4 +22,8 @@ public class UserService {
     public List<User> findUsers() {
         return userDao.findUser();
     }
+
+    public boolean save(User user) {
+        return userDao.saveUser(user);
+    }
 }

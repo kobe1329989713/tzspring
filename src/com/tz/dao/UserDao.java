@@ -43,4 +43,22 @@ public class UserDao {
         });
         return users;
     }
+
+    public boolean saveUser(User user) {
+        String sql = " INSERT INTO tz_user(username, password, age, address, email) VALUES (?, ?, ?, ?, ?); ";
+        int count = jdbcTemplate.update(sql, user.getUsername(),
+                user.getPassword(),
+                user.getAge(),
+                user.getAddress(),
+                user.getEmail()
+        );
+        return count > 0 ? true : false;
+    }
+
+
+
+
+
+
+
 }
