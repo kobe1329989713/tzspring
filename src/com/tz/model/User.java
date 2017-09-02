@@ -9,6 +9,7 @@
  */
 package com.tz.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -18,6 +19,8 @@ import java.util.Date;
  * @version 1.0.0
  * 
  */
+@Entity // 根据 javaBean 生成 表。
+@Table(name = "tz_test")
 public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = -4757618119875012803L;
@@ -36,32 +39,11 @@ public class User implements java.io.Serializable {
 	// 创建时间
 	private Date createTime;
 
-	public User() {
-		super();
-	}
 
-	/**
-	 * 创建一个新的实例 User.
-	 * 
-	 * @param id
-	 * @param username
-	 * @param password
-	 * @param email
-	 * @param age
-	 * @param createTime
-	 */
-	public User(Integer id, String username, String password, String address,String email,
-			Integer age, Date createTime) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.address = address;
-		this.email = email;
-		this.age = age;
-		this.createTime = createTime;
-	}
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getId() {
 		return id;
 	}

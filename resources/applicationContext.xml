@@ -2,35 +2,93 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-  http://www.springframework.org/schema/beans/spring-beans.xsd  
-  http://www.springframework.org/schema/context   
-  http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
-	<!-- @Compoment这类型注解的类都是需要被扫描 说白就是：让Spring的ApplicationContext去加载和初始化所有加了注解的类，给实例化 
-		@Repository:数据层的dao @Service:service就是service @Controller:web比如：action和springmvc-controller类 -->
-	<!-- 扫描文件所在dao包 哪些utul 包 不要扫 -->
-	<context:component-scan base-package="com.tz.dao"/>
-	<context:component-scan base-package="com.tz.service"/>
-
-<!-- 	BasicDataSource dataSource = new BasicDataSource(); -->
-<!-- 	dataSource.setDriverClassName("com.mysql.jdbc.Driver"); -->
-<!-- 	dataSource.setUrl("jdbc:mysql://localhost:3306/tzspring"); -->
-<!-- 	dataSource.setUsername("root"); -->
-<!-- 	dataSource.setPassword("xiaoer"); -->
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/tx
+  http://www.springframework.org/schema/tx/spring-tx.xsd
+  http://www.springframework.org/schema/aop
+  http://www.springframework.org/schema/aop/spring-aop.xsd
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 
-	<!--就是给这个类里面，赋值而已。-->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://192.168.199.143:3306/tzspring?useUnicode=true&amp;characterEncoding=utf8"/>
-		<property name="username" value="admin"/>
-		<property name="password" value="some_pass"/>
-	</bean>	
-	
-	<!-- springjdbctempte查询模板 -->
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
+
+
+    <!-- @Compoment这类型注解的类都是需要被扫描 说白就是：让Spring的ApplicationContext去加载和初始化所有加了注解的类，给实例化
+        @Repository:数据层的dao @Service:service就是service @Controller:web比如：action和springmvc-controller类 -->
+    <!-- 扫描文件所在dao包 哪些utul 包 不要扫 -->
+    <context:component-scan base-package="com.tz.dao"/>
+    <context:component-scan base-package="com.tz.service"/>
+
+    <!-- 	BasicDataSource dataSource = new BasicDataSource(); -->
+    <!-- 	dataSource.setDriverClassName("com.mysql.jdbc.Driver"); -->
+    <!-- 	dataSource.setUrl("jdbc:mysql://localhost:3306/tzspring"); -->
+    <!-- 	dataSource.setUsername("root"); -->
+    <!-- 	dataSource.setPassword("xiaoer"); -->
+
+
+    <!--就是给这个类里面，赋值而已。-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://192.168.199.143:3306/tzspring?useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="username" value="admin"/>
+        <property name="password" value="some_pass"/>
+    </bean>
+
+    <!-- springjdbctempte查询模板 -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--
+        事物,扫包
+
+        扫包 先把 com.tz.dao 替换成 com/tz/dao ,就找到这个目录了,然后在找加了某个注解文件(类),注:这个类必须要有 相就的 构造或者是setXxx() 方法,就看哪个注解的 源代码 它是如何赋值的,就必须要有 注解 和 反射 javaSE 知识了.
+        找到这个文件了,就加载到 spring容器里面去,然后你就可以调用了.
+        ,就是它源代码干事情.
+        <context:component-scan base-package="com.tz.dao"/>
+
+
+        1 找到配置文件了,就开始解析,DOM解析,解析完???
+
+    -->
+
+
+
+    <!-- 配置hibernate 构建一个session工厂 orm框架 -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <!-- 获取数据源 -->
+        <!-- hibernate第一步找到链接对象dataSource -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 第二步：注册bean的信息 -->
+        <property name="namingStrategy">
+            <bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
+        </property>
+        <!-- 获取实体目录 -->
+        <property name="packagesToScan" value="com.tz.model"/>
+        <!-- 第三步:断言，sql是否显示，是否自动构建表 -->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="show_sql">true</prop>
+                <prop key="format_sql">true</prop>
+                <prop key="hbm2ddl.auto">create</prop>
+                <prop key="current_session_context_class">thread</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <!-- 加载注解的事务,因为hibernate 需要手动提交事物，配置了这个就不用了。 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+
+
 </beans>

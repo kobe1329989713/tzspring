@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd  
+  http://www.springframework.org/schema/context   
+  http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--扫包:了,你就不需配置 bean 节点了,全部在注解+类里面完成 -->
+    <context:component-scan base-package="com.tz.ioc.ioc05"/>
+
+
+
+
+	<!--在这个里面配置，就是哪个导演的作用。
+	    这个 bean 节点配置方式,后期完全可以注释来完成.所以就没有.xml 配置文件了.
+	-->
+
+
+
+    <!--就是给类赋值，装配。scope默认是单例, scope="prototype"多例 abstract="true" 继承(父)
+        lazy-init="true"  懒加载，就是在调用 getBean() 方法时，是进行初始化。就是用到时在进行加载。
+    -->
+    <bean id="liuDeHua" class="com.tz.ioc.ioc03.LiuDeHua">
+        <!--通过构造函数注入的,想应的哪个类,必须要有对应的哪个构造函数-->
+        <constructor-arg value="刘德华"/>
+
+        <!--如果还有其它构造函数,加索引的方法来注入, 还有其它一些属性,用提示看看.-->
+        <!--<constructor-arg index="1" value="xxx"/>-->
+    </bean>
+
+    <!--parent="liuDeHua" 继承哪个类(子)-->
+    <bean id="keKe" class="com.tz.ioc.ioc03.KeKe">
+        <constructor-arg value="keke"/>
+    </bean>
+
+    <bean id="movie" class="com.tz.ioc.ioc03.MoGongMovie">
+        <!-- 引用。 必须要要生成 setXxx() 方法。set注入。-->
+        <property name="geLi" ref="keKe"/>
+    </bean>
+    <!-- 它是先找到这个配置，步骤如下：
+        1、加载这个配置。
+        2、解析 配置文件。
+        3、通过反射来 bean 节点，这些配置好了的。类赋值上。
+        4、存储在 spring的 BeanFacotry 工厂里面去。
+        5、就可以调用了。
+
+
+        解析bean节点是通过反射来做的。
+            解析出来。然后装载到一个map 里面的。key value
+            所以你在获取时，是通过这个 key(id) 来获取的,
+
+            复习反射
+     -->
+
+
+
+
+    <!--
+    bean:节点:
+    id:唯一
+    class:装配需要的类，必须要有包名.类名
+
+    //ioc setter注入
+    <property name="属性的名称" value="属性的值"/> 普通变量的方式
+    <property name="属性的名称" ref="beanId"/> 对象的方式
+    前提：必须在类中生成setter方法即可，getter不需要.
+
+    //ioc 构造函数注入
+    <constructor-arg value="刘德华"></constructor-arg>
+
+    //ioc注解注入 @autowire
+
+    //ioc接口注入
+    接口注入，构造函数注入，setter注入也好都在干吗:赋值
+
+     GeLi geLi = new KeKe("keke");
+
+
+
+
+
+     因为一个类如果要用另一个类的里面的数据方法,就是依赖嘛,
+     javaSE 就是在这个类里面 new 另一个类,就可以调用 它的属性及方法.
+     在 spring 里面就是在 .xml 里面 配置,然后这个需要用到另一个类里面的
+     数据时,直接通过spring 工厂来获取到,然后就可以调用了.
+     就是 springIOC 它提供了 bean 缓存,生命周期,事件发布 资源加 等一些服务.
+
+
+
+
+
+
+
+    给一个 javaBean 赋值,如何给 数组 集合 时间  这些属性赋值的了.
+    <bean id="student" class="com.tz.ioc3.Student">
+ 		<property name="address" value="湖南长沙"></property>
+ 		<property name="username" value="keke"></property>
+ 		<property name="age" value="30"></property>
+ 	</bean>
+
+
+
+
+ -->
+
+</beans>

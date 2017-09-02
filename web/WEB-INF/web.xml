@@ -8,7 +8,9 @@
 	<param-value>classpath:applicationContext.xml</param-value>
   </context-param>
   
-   <!-- 放入WebapplicationContext ServletContext(application) web层调用service -->
+   <!-- 放入WebapplicationContext ServletContext(application) web层调用service
+	加了它,tomcat 才可以用 spring 容器
+   -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -39,7 +41,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>tzspringmvc</servlet-name>
-		<url-pattern>*.html</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
   
   <welcome-file-list>

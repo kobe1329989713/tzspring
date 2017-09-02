@@ -9,7 +9,6 @@
  */
 package com;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class ConnectionTest {
 //		dataSource.setPassword("xiaoer");
 
 		//ioc --bean装载，存储，实例
-		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml_bak");
 		//讲存储的实例。我通过getBean取出来.
 		BasicDataSource dataSource = (BasicDataSource)applicationContext.getBean("dataSource");
 		System.out.println(dataSource.getConnection());

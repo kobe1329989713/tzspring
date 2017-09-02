@@ -28,7 +28,9 @@ public class UserController {
     // fastjson
 
 
-//    @ResponseBody
+//
+
+
     @RequestMapping("/user")
     public ModelAndView index() {
         ModelAndView m = new ModelAndView();
