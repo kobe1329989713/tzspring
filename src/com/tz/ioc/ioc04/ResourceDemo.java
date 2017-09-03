@@ -74,7 +74,7 @@ public class ResourceDemo {
 
 
 
-//        spring 最终目录的，就是找到我需要的哪个对象。
+//        springAop 最终目录的，就是找到我需要的哪个对象。
         // BeanFactory ,还有很多功能。
 		XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(resource);
         // 它获取时，就是把.xml 里面配置的哪些 装配到一个 map 里面，然后 通过 key 来获取到。 ？？注解方式。
@@ -109,7 +109,7 @@ public class ResourceDemo {
 
 
         /**
-         * spring 框架，找到配置文件，解析 配置文件、这些基本，只要你javaSe 功能低好，都不算太难
+         * springAop 框架，找到配置文件，解析 配置文件、这些基本，只要你javaSe 功能低好，都不算太难
          *
          * 最难的是：每一个对象的监听和生命周期 Aop，这些都是最难的，它会用到多线程了。
          *

@@ -9,7 +9,7 @@
   </context-param>
   
    <!-- 放入WebapplicationContext ServletContext(application) web层调用service
-	加了它,tomcat 才可以用 spring 容器
+	加了它,tomcat 才可以用 springAop 容器
    -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

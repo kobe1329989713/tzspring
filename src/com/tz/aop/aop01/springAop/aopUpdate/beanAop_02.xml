@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd  
+  http://www.springframework.org/schema/context   
+  http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!-- AOP -->
+
+    <!-- 目标类，在调用它里面的方法 -->
+    <bean id="target" class="com.tz.aop.aop01.springAop.aopUpdate.UserserviceImpl"/>
+
+
+    <!-- (advice增强类) 也叫通知类、也叫织入类。-->
+    <bean id="beforeAdvice" class="com.tz.aop.aop01.springAop.aopUpdate.TranscationInvocation"/>
+    <bean id="beforeAdvice2" class="com.tz.aop.aop01.springAop.aopUpdate.TranscationInvocation2"/>
+    <bean id="afterReturningAdvice" class="com.tz.aop.aop01.springAop.aopUpdate.CommintTranscationInvocation"/>
+    <bean id="methodInterceptorAdvice" class="com.tz.aop.aop01.springAop.aopUpdate.MethodInterceptorAdvice"/>
+    <bean id="exceptionAdvice" class="com.tz.aop.aop01.springAop.aopUpdate.ExceptionAdvice"/>
+
+
+    <!---->
+    <bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="target"/>
+        <property name="interfaces" value="com.tz.aop.aop01.springAop.aopUpdate.IUservice"/>
+
+
+        <!--<property name="interceptorNames" value="beforeAdvice,beforeAdvice2,afterReturningAdvice,methodInterceptorAdvice，exceptionAdvice">-->
+        <property name="interceptorNames">
+            <list>
+                <!--<value>beforeAdvice</value>-->
+                <!--<value>beforeAdvice2</value>-->
+                <!--<value>afterReturningAdvice</value>-->
+                <!--<value>methodInterceptorAdvice</value>-->
+                <value>exceptionAdvice</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <!--可以连续给一个方法配置多个 aop
+
+    -->
+
+</beans>

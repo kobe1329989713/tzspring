@@ -19,7 +19,7 @@ public class Test01 {
         Resource resource = new ClassPathResource("applicationContext.xml");
 //        通过 盘符获取
         //Resource resource = new FileSystemResource("D:/tzprojects/tzspring02/src/bean.xml");
-        // ServitContextResource 通过容器获取配置文件,如 web.xml 容器. 所以你必须要在web.xml 里面去配置下,这个一般不能你去管.只要你配置了.spring 会自己去获取的.
+        // ServitContextResource 通过容器获取配置文件,如 web.xml 容器. 所以你必须要在web.xml 里面去配置下,这个一般不能你去管.只要你配置了.springAop 会自己去获取的.
         // 所以你tomcat 一启动它就可以获取spring 容器里面的数据了,所以你就可以用注释了.
 
         // 所以你想换演员时,只需修改配置文件即可.而已不用去修改代码了.就是从.xml文件里面获取

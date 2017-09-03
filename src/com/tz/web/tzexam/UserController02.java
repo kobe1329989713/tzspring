@@ -29,5 +29,5 @@ public class UserController02 {
         userDao2.save(user);
         return "index";
     }
-
+    // 根据 javaBean 生成 表，没有完成。
 }

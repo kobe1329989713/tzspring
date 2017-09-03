@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd  
+  http://www.springframework.org/schema/context   
+  http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+
+    <!-- AOP -->
+
+    <!-- 目标类，在调用它里面的方法 -->
+    <bean id="target" class="com.tz.aop.aop01.springAop.before.WaiterImpl"/>
+
+    <!-- (advice增强类) ，增强的，前置通知-->
+    <bean id="advice" class="com.tz.aop.aop01.springAop.before.GreetingBeforeAdvice"/>
+
+    <!-- 代理工厂 -->
+    <!--
+
+        通过设定：optimize来决定你是否使用的代理模式：
+        true:cglib动态代理
+        false：jdk的动态代理(默认)
+        当设置true的时候:强制使用cgblib代理，对应单例模式，推荐使用它。dao,service,
+        对已其他的模式，一般推荐使用jdk的代理。原因是cglib,在创建代理对象的时候，是编译阶段发生的行为，而创建出的对象对象的运行速度较高。
+        jdk代理恰好相反。
+
+        单例模式就用：cgblib
+        多例模式都用:jdk:
+     -->
+    <bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyInterfaces="com.tz.aop.aop01.springAop.before.IWaiter"
+          p:interceptorNames="advice"
+          p:target-ref="target"
+          p:proxyTargetClass="true">
+    </bean>
+
+
+
+
+</beans>
