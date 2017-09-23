@@ -2,6 +2,7 @@ package com.tz.aop.aop01.springAop.annotation;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,4 +31,5 @@ public class TranscationAdvisor {
     public void beforeAdvisor(){
         System.out.println("===============事务提交了....");
     }
+
 }

@@ -1,0 +1,48 @@
+spring aop 注解
+
+xml 也要写两个
+剩下全部过都是 注解的.
+
+
+
+
+@aspectJ支持三种通配符：
+*:匹配任意字符
+..:匹配任意字符，一般联合*使用,在参数列表中，代表参数的全匹配(空方法和有参数的)
++:匹配类制定的所有的类。如果是接口或者父类。会把下面所有扩展的子类和本身都会匹配出来
+
+
+
+
+execution()是最常用的一种过滤方法
+的函数.
+格式：exection(<访问修饰符>?[返回值类型][方法的名称](<参数>)<异常模式>)
+1:匹配所有的方法：execution(* *(..))
+==第一个*代表是返回值
+==第二个*代表是方法名
+..的代表参数
+2:execution(* com.tz.aop6.FeiFeiImpl.add*(..))
+3:execution(* com.tz.aop6.IPerson.add*(..))
+4:execution(* com.tz.*.*(..))
+5:execution(* com.tz.aop6.*.add*(..))找到aop下面的类
+6:execution(* com.tz.aop6..*.add*(..))找到当前aop和aop所有的子孙包下面的所有的类
+7:execution(* com.tz.aop6..*.add*(int,..))找到当前aop和aop所有的子孙包下面的所有的类
+
+exection(* com.tz.aop5..*.before*(int,..,string))
+before(int,string)
+beforeadd(int,int,string)
+beforeadd(int,int,string,string)
+
+args(匹配参数的)
+within:(匹配类。(不能是接口)不能匹配方法)
+
+
+
+公式：public void com.tz.aop.UserServerImpl.save(int,int)throws exception;
+
+
+
+
+
+
+
